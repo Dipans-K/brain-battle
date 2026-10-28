@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: brain-battle-server
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_ORIGIN
+        value: https://YOUR-SITE.netlify.app

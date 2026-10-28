@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090b18">
+  <meta name="description" content="Brain Battle — challenge your friends in a real-time multiplayer quiz.">
+  <title>Brain Battle — Think Fast. Win Big.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Brain Battle home"><span class="brand-mark">B<span>✦</span></span><span>BRAIN<span class="brand-accent">BATTLE</span></span></a>
+    <div class="topbar-right"><span class="connection-dot" id="connectionDot"></span><span id="connectionText">Connecting…</span><button class="icon-button" id="soundButton" aria-label="Toggle sound" title="Toggle sound">♪</button></div>
+  </header>
+  <main id="app" class="app-shell">
+    <section class="hero" id="homeView">
+      <div class="hero-copy"><div class="eyebrow"><span class="sparkle">✦</span> THE ULTIMATE QUIZ SHOWDOWN</div>
+        <h1>Think fast.<br><span class="gradient-text">Win big.</span></h1>
+        <p class="hero-description">Challenge your friends, trust your brain, and climb the leaderboard. You have 15 seconds. Make them count.</p>
+        <div class="hero-stats"><div><strong>02–08</strong><span>PLAYERS</span></div><i></i><div><strong>15</strong><span>QUESTIONS</span></div><i></i><div><strong>15s</strong><span>PER QUESTION</span></div></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="brain-core"><span>✦</span><b>BB</b></div><div class="float-chip chip-lightning">ϟ</div><div class="float-chip chip-plus">+</div><div class="float-chip chip-question">?</div><div class="float-chip chip-star">✦</div><div class="art-caption">YOUR BRAIN. YOUR BATTLE.</div></div>
+    </section>
+
+    <section class="home-panels" id="homePanels">
+      <article class="panel create-panel"><div class="panel-icon purple-icon">✦</div><div class="panel-heading"><h2>Create a room</h2><p>You're the host. Bring the brainpower.</p></div>
+        <form id="createForm" class="form-stack"><label for="createName">YOUR PLAYER NAME</label><input id="createName" maxlength="20" autocomplete="nickname" placeholder="e.g. QuizMaster" required><button class="primary-button" type="submit">Create room <span>↗</span></button></form>
+      </article>
+      <article class="panel join-panel"><div class="panel-icon blue-icon">⌁</div><div class="panel-heading"><h2>Join a room</h2><p>Got a code? Jump into the action.</p></div>
+        <form id="joinForm" class="form-stack"><label for="joinName">YOUR PLAYER NAME</label><input id="joinName" maxlength="20" autocomplete="nickname" placeholder="Enter your name" required><label for="joinCode">ROOM CODE</label><input id="joinCode" maxlength="6" class="code-input" autocapitalize="characters" autocomplete="off" placeholder="ABC123" required><button class="secondary-button" type="submit">Join the battle <span>→</span></button></form>
+      </article>
+    </section>
+    <section class="rules-strip"><div class="rules-title"><span>✦</span><strong>HOW TO PLAY</strong></div><div class="rule-item"><span class="rule-number">01</span><span>Create or join a room</span></div><div class="rule-item"><span class="rule-number">02</span><span>Answer 15 questions</span></div><div class="rule-item"><span class="rule-number">03</span><span>Earn 100 points per correct answer</span></div></section>
+
+    <section class="game-view hidden" id="lobbyView" aria-live="polite">
+      <div class="section-header"><button class="back-link" id="lobbyLeave">← Leave room</button><span class="status-pill"><i></i> WAITING FOR PLAYERS</span></div>
+      <div class="lobby-title"><div class="eyebrow">THE BATTLE IS ALMOST ON</div><h1>Room <span class="gradient-text">lobby.</span></h1><p>Invite your friends. The more brains, the better.</p></div>
+      <div class="lobby-grid"><article class="panel room-card"><span class="small-label">YOUR ROOM CODE</span><div class="room-code" id="roomCode">------</div><button class="secondary-button copy-button" id="copyCode">▣ Copy invite code</button><p class="hint">Share this code with your friends so they can join.</p><div class="divider-line"></div><div class="lobby-meta"><span>Players joined</span><strong id="playerCount">1 / 8</strong></div><div class="capacity-track"><span id="capacityBar"></span></div><button class="primary-button" id="startButton" disabled>Start battle <span>↗</span></button><p class="hint" id="startHint">At least 2 players are needed to start.</p></article>
+        <article class="panel players-card"><div class="card-title-row"><div><h2>Who's in?</h2><p>Meet your opponents.</p></div><span class="live-badge"><i></i> LIVE</span></div><div id="lobbyPlayers" class="player-list"></div><div class="lobby-tip"><span>✦</span><p><strong>Quick tip</strong><br>Trust your first instinct. Speed matters!</p></div></article></div>
+    </section>
+
+    <section class="game-view hidden" id="quizView" aria-live="polite">
+      <div class="quiz-top"><div class="round-chip" id="roundChip">ROUND 1 <span>•</span> GENERAL KNOWLEDGE</div><button class="quiet-button" id="quizLeave">Leave game</button></div>
+      <div class="quiz-layout"><div class="quiz-main"><div class="question-meta"><span id="questionCount">QUESTION 01 / 15</span><span id="answeredCount">0 / 2 ANSWERED</span></div><div class="progress-track"><span id="questionProgress"></span></div>
+          <div class="timer-row"><div><span class="eyebrow">TIME REMAINING</span><div class="timer-value" id="timerValue">15<span>s</span></div></div><div class="timer-ring" id="timerRing"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ring-bg" cx="50" cy="50" r="43"></circle><circle class="ring-fill" id="ringFill" cx="50" cy="50" r="43"></circle></svg><span id="ringNumber">15</span></div></div>
+          <div class="question-card"><span class="question-category" id="questionCategory">GENERAL KNOWLEDGE</span><h1 id="questionText">Waiting for the first question…</h1><div id="answerGrid" class="answer-grid"></div><div class="answer-feedback" id="answerFeedback" role="status"></div></div>
+          <div class="quiz-footer"><span><span class="tiny-pulse"></span> LIVE BATTLE</span><span>+100 PTS FOR A CORRECT ANSWER</span></div>
+        </div><aside class="panel scoreboard-card"><div class="card-title-row"><div><h2>Leaderboard</h2><p>Every point counts.</p></div><span class="trophy-mini">♜</span></div><div class="scoreboard-sub"><span>PLAYER</span><span>SCORE</span></div><div id="quizScores" class="score-list"></div><div class="scoreboard-note"><span>✦</span> Keep your focus. The top spot is yours to take.</div></aside></div>
+    </section>
+
+    <section class="game-view hidden" id="resultsView" aria-live="polite"><div class="results-wrap"><div class="winner-burst">✦</div><div class="eyebrow">THE BATTLE IS OVER</div><h1 id="winnerTitle">We've got a winner!</h1><p id="winnerSubtitle" class="hero-description">The scores are in. Here's how everyone did.</p><div id="podium" class="podium"></div><div class="panel final-score-panel"><div class="card-title-row"><div><h2>Final scoreboard</h2><p>All 15 questions. Every point counted.</p></div><span class="trophy-mini">♜</span></div><div id="finalScores" class="final-score-list"></div></div><div class="results-actions"><button class="primary-button" id="playAgain">Play again <span>↗</span></button><button class="secondary-button" id="homeButton">Back to home</button></div></div></section>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+  <footer class="footer"><span>© 2026 BRAIN BATTLE</span><span>BUILT FOR CURIOUS MINDS <b>✦</b></span><span>THINK FAST. PLAY FAIR.</span></footer>
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
